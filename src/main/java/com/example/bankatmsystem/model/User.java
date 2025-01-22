@@ -14,6 +14,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private Boolean approved = false; // Admin approval status
+
     public Long getId() {
         return id;
     }
@@ -21,9 +30,6 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Column(nullable = false, unique = true)
-    private String username;
 
     public String getUsername() {
         return username;
@@ -33,9 +39,6 @@ public class User {
         this.username = username;
     }
 
-    @Column(nullable = false)
-    private String password;
-
     public String getPassword() {
         return password;
     }
@@ -43,9 +46,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @Column(nullable = false)
-    private Boolean approved = false; // Admin approval status
 
     public Boolean getApproved() {
         return approved;
