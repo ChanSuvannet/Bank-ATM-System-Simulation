@@ -34,6 +34,17 @@ public class User {
     }
 
     @Column(nullable = false)
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column(nullable = false)
     private String password;
 
     public String getPassword() {
@@ -54,4 +65,5 @@ public class User {
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
+
 }

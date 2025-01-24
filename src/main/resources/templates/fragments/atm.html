@@ -1,0 +1,45 @@
+<div th:fragment="content">
+    <section class="bg-white">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
+                Bank ATM System Simulation
+            </a>
+            <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                            ATM Dashboard
+                        </h1>
+
+                        <div th:if="${username}" class="p-4 mb-4 text-green-800 rounded-lg bg-green-100" role="alert">
+                            <span>Welcome, <span th:text="${username}"></span>!</span>
+                        </div>
+
+
+                        <!-- ATM Operation Options -->
+                        <div class="space-y-4">
+                            <button th:onclick="location.href='/atm/check-balance'"
+                                class="w-full bg-blue-500 text-white rounded-lg px-4 py-2">
+                                Check Balance
+                            </button>
+
+                            <button th:onclick="location.href='/atm/withdraw'"
+                                class="w-full bg-green-500 text-white rounded-lg px-4 py-2">
+                                Withdraw Funds
+                            </button>
+
+                            <button th:onclick="location.href='/atm/deposit'"
+                                class="w-full bg-yellow-500 text-white rounded-lg px-4 py-2">
+                                Deposit Funds
+                            </button>
+
+                            <button th:onclick="location.href='/atm/logout'"
+                                class="w-full bg-red-500 text-white rounded-lg px-4 py-2">
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</div>

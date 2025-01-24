@@ -1,22 +1,60 @@
 package com.example.bankatmsystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.bankatmsystem.service.ATMService;
+import com.example.bankatmsystem.service.SemaphoreService;
 
-@RestController
-@RequestMapping("/atm")
+@Controller
 public class ATMController {
 
     @Autowired
-    private ATMService atmService;
+    private SemaphoreService semaphoreService;
 
-    @PostMapping("/transaction")
-    public String performTransaction(@RequestParam Long userId, @RequestParam String type, @RequestParam Double amount) {
-        return atmService.performTransaction(userId, type, amount);
+    // Show ATM page with username and options (GET request)
+    @GetMapping("/atm")
+    public String getATMPage(Model model) {
+        // Check if a user is already logged in
+        if (!semaphoreService.acquire()) {
+            model.addAttribute("error", "System is busy, another user is already accessing the ATM.");
+            return "login"; // Redirect to login if the system is busy
+        }
+
+        // Add the logged-in username to the model
+        model.addAttribute("username", "User"); // Replace "User" with the actual logged-in username
+        model.addAttribute("content", "fragments/atm");
+
+        return "main"; // Return the main layout with ATM fragment
+    }
+
+    // Check Balance (GET request)
+    @GetMapping("/atm/check-balance")
+    public String checkBalance(Model model) {
+        // Logic to check balance here
+        model.addAttribute("balance", 1000); // Example balance, replace with actual logic
+        return "atmBalance"; // A page showing the balance
+    }
+
+    // Withdraw Funds (GET request)
+    @GetMapping("/atm/withdraw")
+    public String withdrawFunds(Model model) {
+        // Logic for withdrawal here
+        return "atmWithdraw"; // A page for withdrawal process
+    }
+
+    // Deposit Funds (GET request)
+    @GetMapping("/atm/deposit")
+    public String depositFunds(Model model) {
+        // Logic for deposit here
+        return "atmDeposit"; // A page for deposit process
+    }
+
+    // Logout (GET request)
+    @GetMapping("/atm/logout")
+    public String logout(Model model) {
+        // Logic to handle logout here
+        return "redirect:/login"; // Redirect back to login page
     }
 }
