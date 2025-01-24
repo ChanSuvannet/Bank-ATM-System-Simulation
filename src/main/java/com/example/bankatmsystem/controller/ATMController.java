@@ -1,5 +1,7 @@
 package com.example.bankatmsystem.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ public class ATMController {
 
     @Autowired
     private SemaphoreService semaphoreService;
+    private static final Logger logger = LoggerFactory.getLogger(ATMController.class);
 
     // Show ATM page with username and options (GET request)
     @GetMapping("/atm")
@@ -52,10 +55,16 @@ public class ATMController {
         return "atmDeposit"; // A page for deposit process
     }
 
-    // Logout (GET request)
     @GetMapping("/atm/logout")
     public String logout(Model model) {
-        // Logic to handle logout here
-        return "redirect:/login"; // Redirect back to login page
+        // Release the semaphore when the user logs out
+        semaphoreService.release();
+
+        // Logic to handle logout here, like invalidating the session or performing
+        // cleanup
+        logger.info("User logged out successfully.");
+
+        // Redirect back to the login page
+        return "redirect:/login";
     }
 }
