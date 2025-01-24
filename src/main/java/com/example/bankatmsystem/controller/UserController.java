@@ -53,8 +53,8 @@ public class UserController {
         }
 
         try {
-            userService.createUser(userDTO); // Try to create the user
-            return "redirect:/login"; // Success message is displayed on the main page
+            userService.createUser(userDTO); 
+            return "redirect:/login";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage()); // Show specific error (e.g., username exists)
             model.addAttribute("content", "fragments/register");

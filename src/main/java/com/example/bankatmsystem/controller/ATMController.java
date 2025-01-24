@@ -16,17 +16,18 @@ public class ATMController {
     // Show ATM page with username and options (GET request)
     @GetMapping("/atm")
     public String getATMPage(Model model) {
+
         // Check if a user is already logged in
         if (!semaphoreService.acquire()) {
             model.addAttribute("error", "System is busy, another user is already accessing the ATM.");
-            return "login"; // Redirect to login if the system is busy
+            return "login";
         }
 
         // Add the logged-in username to the model
-        model.addAttribute("username", "User"); // Replace "User" with the actual logged-in username
+        model.addAttribute("username", "User");
         model.addAttribute("content", "fragments/atm");
 
-        return "main"; // Return the main layout with ATM fragment
+        return "main";
     }
 
     // Check Balance (GET request)
